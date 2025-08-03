@@ -1,0 +1,128 @@
+
+def solution(n, wires):
+#     answer = -1
+    # print(wires[1],'wtf')
+    # 이거 못만들었음... [0] * len(wires) 같은거 시도함 ㅋㅋㅋㅋㅋㅋㅋㅋㅋ
+    graph = [[0 for _ in range(n+1) ] for _ in range(n+1)]
+    # visited = [[0 for _ in range(n+1) ] for _ in range(n+1)]
+    visited = [0 for _ in range(n+1) ]
+    
+    que = []
+    ans=[]
+    
+    # 완탐이니 모든 wire 조합에서 하나씩 제거하고 bfs?
+    # 두 개로 나눠지는데 어떻게? -> 끊어진 전력망의 두 지점에서 시작하기!
+    for dlt in range(len(wires)):
+        graph = [[0 for _ in range(n+1) ] for _ in range(n+1)]
+        visited = [0 for _ in range(n+1) ]
+        for each in range(len(wires)):
+            if each != dlt:
+                graph[wires[each][0]][wires[each][1]]=1
+                graph[wires[each][1]][wires[each][0]]=1
+            else:
+                continue
+            
+        # 이제 bfs 두 번!
+        # 함수로 할거임 bfs 함수는 wires[dlt]와 그래프 받음
+        # 이후 각 시작점부터 연결된 노드 수 셀 것    
+        # 테스트용 그래프 생성, 지워야함
+    # wires=[[1,2],[2,3],[3,4],[3,5],[4,5]]
+    # n = 5
+    # graph = [[0 for _ in range(n+1) ] for _ in range(n+1)]
+    # visited = [[0 for _ in range(n+1) ] for _ in range(n+1)]
+    # for each in range(len(wires)):
+    #     graph[wires[each][0]][wires[each][1]]=1
+        # graph[wires[each][1]][wires[each][0]]=1
+    
+    # 우선 1개만
+        counts=[]
+        # print(wires[dlt],'wires[dlt]')
+        for starts in wires[dlt]:
+            # print(starts,'starts')
+            qu = [starts]
+            count=0
+            # killer=0
+            while qu:
+                poped=qu.pop()
+                visited[poped]=1
+                # print('poped',poped)
+                for ndes in range(n+1):
+                    if graph[poped][ndes]==1 and visited[ndes]==0:
+                        visited[ndes]=1
+                        # print(poped,ndes,'poped, ndes')
+                        qu.append(ndes)
+                        count+=1
+        
+                # killer+=1
+                # if killer==6:
+                #     print('error!')
+                #     break
+            counts.append(count)
+            
+        # print(counts,'counts')
+        # print(counts[0]-counts[1])
+        ans.append(abs(counts[0]-counts[1]))
+                   
+    # print(ans,'ans')
+    # print(graph)
+    # print(min(ans),'counts')    
+
+    # print(graph)
+    # a,b = bfs()
+    # print(a)
+    # print(b)
+    return min(ans)
+
+
+
+
+
+        
+#         ans=[]
+#         for st in wires[dlt]:
+#             count=0
+#             qu = []
+#             # print(st, dlt)
+            
+#             for nde in range(n+1):
+#                 print(graph[st][nde],nde,st,'nde st')
+#                 # if graph[st][nde]==1:
+#                     # qu.append[nde]
+#             # print(qu)
+#                     # while qu:
+#                     #     nx = qu.pop()
+#                     #     for nw_node in range(n+1):
+#                     #         if graph[st][nw_node]==1:
+#                     #             qu.append[nw_node]
+#                     #             count+=1
+
+
+
+
+# def bfs():
+#     # 테스트용 그래프 생성, 지워야함
+#     wires=[[1,2],[2,3],[3,4]]
+#     n = 4
+#     graph = [[0 for _ in range(n+1) ] for _ in range(n+1)]
+#     visited = [[0 for _ in range(n+1) ] for _ in range(n+1)]
+#     for each in range(len(wires)):
+#         graph[wires[each][0]][wires[each][1]]=1
+#         graph[wires[each][1]][wires[each][0]]=1
+    
+#     # 우선 1개만
+#     n = 1
+#     qu = []
+#     count=0
+#     for nde1 in range(n+1):
+#         if graph[n][nde1]==1:
+#             qu.append(nde1)
+#             count+=1
+#         while qu:
+#             for ndes in range(n+1):
+#                 if graph[n][ndes]==1:
+#                     qu.append(ndes)
+#                     count+=1
+#     print(count)
+#     print(graph)
+    
+#     return graph, count
